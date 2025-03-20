@@ -218,5 +218,43 @@ console.log(utente.nome); // Output: Anna
 ```
 
 
+## Architettura Client-Side
+- Interazione con API tramite `fetch()`
+- Gestione asincrona con `async/await`
+- Manipolazione dati con `JSON.parse()` e `JSON.stringify()`
+
+## Oggetti DOM, Eventi, Finestre, Nodi
+- Il DOM rappresenta la struttura della pagina HTML come un albero
+- Creazione e rimozione di elementi con `document.createElement()`, `.appendChild()`, `.removeChild()`
+
+## Form in JavaScript
+
+### Selezione degli input
+- `document.getElementById("id")`
+- `document.querySelector("input[name='nome']")`
+
+### Validazione dei dati
+- Controllare se un campo è vuoto: `if(input.value === "")`
+- Validazione numeri/email con espressioni regolari
+
+### Eventi nei form
+- `submit`, `input`, `change`
+- Prevenire il comportamento di default con `event.preventDefault()`
+
+### Esempio di gestione di un form
+```js
+const form = document.querySelector("#mioForm");
+form.addEventListener("submit", function(event) {
+    event.preventDefault();
+    const nome = document.querySelector("#nome").value;
+    alert("Ciao, " + nome);
+});
+```
+
+## Modello a Oggetti in JavaScript
+- Ogni elemento del DOM è un oggetto
+- Gli oggetti JavaScript possono essere prototipi per altri oggetti
+
+
 
 
