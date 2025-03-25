@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+</head>
+
+<body>
+    <div class="container">
+        i parametri sono:
+        <br>
+        <br>
+        
+        <script>
+            new URLSearchParams(window.location.search).forEach((value, key) => {
+                document.write(key + " = " + value + "<br>");
+                //document.getElementById("container").innerHTML += value + "<br>";
+            });
+            
+        </script>
+    </div>
+</body>
+
+</html>
