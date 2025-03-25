@@ -13,8 +13,9 @@
         
         <script>
             new URLSearchParams(window.location.search).forEach((value, key) => {
-                document.write(key + " = " + value + "<br>");
-                //document.getElementById("container").innerHTML += value + "<br>";
+                document.querySelector(".container").innerHTML += key + " = " + value + "<br>";
+                
+                //document.getElementById("container").innerHTML += nome + "<br>" + cognome;
             });
             
         </script>
