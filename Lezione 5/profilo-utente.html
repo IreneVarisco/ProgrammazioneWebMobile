@@ -13,29 +13,36 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
     
     <nav class="navbar navbar-expand bg-body-tertiary">
-        <div class="container-fluid">
-          <a class="navbar-brand" href="#">PWM</a>
-          
-            <ul class="navbar-nav">
-              <li class="nav-item">
-                <a class="nav-link" aria-current="page" href="home.html">Home</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="popolari.html">Popolari</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="scheda-film.html">Scheda Film</a>
-              </li>
-              <li class="nav-item active">
-                <a class="nav-link" href="profilo-utente.html">Profilo Utente</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link disabled" aria-disabled="true">Profilo Utente</a>
-              </li>
-            </ul>
-        </div>
-      </nav>
-      
-
+      <div class="container-fluid">
+        <a class="navbar-brand" href="home.html">PWM</a>
+        
+          <ul class="navbar-nav">
+            <li class="nav-item">
+              <a class="nav-link" href="popolari.html">Popolari</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="profilo-utente.html">Profilo Utente</a>
+            </li>
+          </ul>
+          <form class="d-flex ms-auto" role="search" onsubmit="searchCards(event)">
+            <input id="searchInput" class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+            <button class="btn btn-outline-success" type="submit">Search</button>
+        </form>
+      </div>
+    </nav>
+    <script src="popolari.js"></script>
+    <script>
+      function searchCards(event) {
+            event.preventDefault();
+            var searchValue = document.getElementById("searchInput").value.toLowerCase();
+            for (var i = 0; i < popolari.results.length; i++) {
+                if (popolari.results[i].original_title.toLowerCase().includes(searchValue)) {
+                    document.getElementById(popolari.results[i].id).classList.remove("d-none");
+                } else {
+                    document.getElementById(popolari.results[i].id).classList.add("d-none");
+                }
+            }
+        }
+    </script>
 </body>
 </html>
