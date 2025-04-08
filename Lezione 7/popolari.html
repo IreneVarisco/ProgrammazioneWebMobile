@@ -153,7 +153,7 @@
                     onchange="cambioPagina();">
             </div>
             <div class="col-3">
-                <select id="cambiolingua" class="form-select" onchange="cambioPagina()">
+                <select id="cambiolingua" class="form-select" onchange="cambioLingua()">
                 </select>
             </div>
         </div>
@@ -179,9 +179,48 @@
 
         const key = "7cd2c934ca84023b4bf1c31dd21ceda2";
         ottieniLingue();
+
         function cambioPagina() {
+            var currentPage = parseInt(document.getElementById('pagina').value);
+            var totalCards = document.querySelectorAll(".col-lg-2.col-md-3:not(#modello)").length;
+            var cardsPerPage = 12; // Number of cards per page
+
+            if (totalCards > cardsPerPage) {
+            var totalPages = Math.ceil(totalCards / cardsPerPage);
+            if (currentPage > totalPages) {
+                currentPage = totalPages;
+                document.getElementById('pagina').value = currentPage;
+            }
+
+            var startIndex = (currentPage - 1) * cardsPerPage;
+            var endIndex = startIndex + cardsPerPage;
+
+            document.querySelectorAll(".col-lg-2.col-md-3:not(#modello)").forEach((card, index) => {
+                if (index >= startIndex && index < endIndex) {
+                card.style.display = "block";
+                } else {
+                card.style.display = "none";
+                }
+            });
+            }
+
+            if (searchValue) {
+            searchCards(new Event('submit'));
+            } else {
             mostraPopolari();
+            }
         }
+        
+        function cambioLingua() {
+            var query = document.getElementById('cambiolingua').value;
+
+            if (query.length > 0) {
+                searchCards(new Event('submit'));
+            } else {
+                mostraPopolari();
+            }
+        }
+
 
 
         function ottieniLingue() {
@@ -212,6 +251,7 @@
 
             mostraPopolari();
         }
+
         function mostraPopolari() {
             var modello = document.getElementById('modello');
             var container = modello.parentNode;
@@ -246,6 +286,19 @@
         }
         document.getElementById('pagina').addEventListener('change', cambioPagina);
 
+        function getParams() {
+            const params = new URLSearchParams(window.location.search);
+            return {
+                input: params.get("searchInput"),
+            };
+        }
+        window.onload = function () {
+            const input = getParams().input;
+            document.getElementById("searchInput").value = input;
+            if (input) {
+                searchCards(new Event('submit'));
+            }
+        };
 
         function searchCards(event) {
             event.preventDefault();
@@ -253,7 +306,8 @@
             var modello = document.getElementById("modello");
             document.querySelectorAll(".col-lg-2.col-md-3:not(#modello)").forEach(el => el.remove());
 
-            const url = `https://api.themoviedb.org/3/search/movie?include_adult=false&language=it-IT&page=1&query=${encodeURIComponent(searchValue)}`;
+            var language = document.getElementById("cambiolingua").value || "it-IT";
+            const url = `https://api.themoviedb.org/3/search/movie?include_adult=false&language=${language}&page=1&query=${encodeURIComponent(searchValue)}`;
             const options = {
                 method: 'GET',
                 headers: {

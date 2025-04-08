@@ -202,6 +202,11 @@
         })
         .catch(err => console.error(err));
     }
+    function searchCards(event) {
+      event.preventDefault();
+      const searchValue = document.getElementById("searchInput").value;
+      window.location.href = "popolari.html?searchInput=" + encodeURIComponent(searchValue);
+    }
   </script>
 </body>
 

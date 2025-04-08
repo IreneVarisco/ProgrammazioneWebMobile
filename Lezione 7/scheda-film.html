@@ -164,6 +164,7 @@
   </nav>
 
   <br>
+  
   <div class="scheda-film" style="margin-left : 20px;">
     <div class="row d-flex flex-nowrap">
       <div class="col-md-3 col-sm-3 col-3" style="min-width: 200px; flex: 0 0 auto; max-width: 210px;">
@@ -254,10 +255,11 @@
       </script>
     <script>
       var parametri = new URLSearchParams(window.location.search);
+      if (parametri.has("id")) {       
       var id_film = parametri.get("id");
       const apiKey = "7cd2c934ca84023b4bf1c31dd21ceda2";
       const apiUrl = `https://api.themoviedb.org/3/movie/${id_film}?api_key=${apiKey}&language=it-IT`;
-
+      
       fetch(apiUrl)
         .then(res => {
           if (!res.ok) {
@@ -326,54 +328,15 @@
           }
         })
         .catch(err => console.error("Errore nel caricamento del cast:", err));
+      }
 
       function searchCards(event) {
-        document.querySelector(".scheda-film").classList.add("d-none");
-        document.querySelector(".container").classList.remove("d-none");
         event.preventDefault();
-        var searchValue = document.getElementById("searchInput").value.toLowerCase();
-        var modello = document.getElementById("modello");
-        document.querySelectorAll(".col-lg-2.col-md-3:not(#modello)").forEach(el => el.remove());
-
-        const url = `https://api.themoviedb.org/3/search/movie?include_adult=false&language=it-IT&page=1&query=${encodeURIComponent(searchValue)}`;
-        const options = {
-          method: 'GET',
-          headers: {
-            accept: 'application/json',
-            Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI3Y2QyYzkzNGNhODQwMjNiNGJmMWMzMWRkMjFjZWRhMiIsIm5iZiI6MTc0MzUxNjUzMy42MjYsInN1YiI6IjY3ZWJmMzc1ZDc2YzE1OWExNWZiMWM2ZiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.K-O8_L0X60b4VPzJUeAuIoX6UUqzmDxS5DrCZIZUOtc'
-          }
-        };
-
-        fetch(url, options)
-          .then(res => {
-            if (!res.ok) {
-              throw new Error(`HTTP error! status: ${res.status}`);
-            }
-            return res.json();
-          })
-          .then(json => {
-            if (json.results.length === 0) {
-              var container = document.querySelector(".row");
-              var noResults = document.createElement("div");
-              noResults.className = "col-12 text-center mt-4";
-              noResults.innerHTML = "<h3>Nessun risultato trovato per '" + searchValue + "'</h3>";
-              modello.after(noResults);
-            } else {
-              json.results.forEach(element => {
-                var clone = modello.cloneNode(true);
-                clone.getElementsByClassName("card-title")[0].innerHTML = element.original_title;
-                clone.getElementsByClassName("card-text")[0].innerHTML = element.overview;
-                clone.getElementsByClassName("btn")[0].href = "scheda-film.html?id=" + element.id;
-                clone.getElementsByClassName("card-img-top")[0].src = "https://image.tmdb.org/t/p/w500" + element.poster_path;
-
-                clone.classList.remove("d-none");
-                clone.id = element.id;
-                modello.after(clone);
-              });
-            }
-          })
-          .catch(err => console.error(err));
+        const searchValue = document.getElementById("searchInput").value;
+        window.location.href = "popolari.html?searchInput=" + encodeURIComponent(searchValue);
       }
+
+      
     </script>
 </body>
 
