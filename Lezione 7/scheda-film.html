@@ -9,11 +9,46 @@
     integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 
   <style>
+    body,
+    nav {
+      margin: 0;
+      padding: 0;
+      border: none;
+      width: 100%;
+      background-color: #d4b8e2;
+      overflow-x: hidden;
+    }
+
+    .navbar-brand {
+      color: #4a2c5b;
+      font-weight: bold;
+    }
+
+    .navbar-nav .nav-link {
+      color: #4a2c5b;
+    }
+
+    .navbar-nav .nav-link.active {
+      color: #77af24;
+      font-weight: bold;
+    }
+
+    .form-control {
+      border-color: #d4b8e2;
+    }
+
+    .form-control:focus {
+      border-color: #77af24;
+      box-shadow: 0 0 0 0.2rem rgba(119, 175, 36, 0.25);
+    }
+
     .card {
       width: 150px;
       height: 100%;
       display: flex;
       flex-direction: column;
+      border: 1px #4a2c5b;
+      box-shadow: 0 4px 15px #4a2c5b;
     }
 
     .actor-name,
@@ -28,20 +63,31 @@
     .scrollmenu {
       overflow-x: auto;
       white-space: nowrap;
+      width: 100%;
+      margin-left: 0;
+      padding-left: 20px;
+      border: 1px #4a2c5b;
+      border-radius: 10px;
+      box-shadow: 0 4px 15px #4a2c5b;
     }
 
     .scrollmenu .col {
       display: inline-block;
       float: none;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+    }
+
+    .scrollmenu::-webkit-scrollbar {
+      display: none;
     }
 
     .card-body {
       flex-grow: 1;
       display: flex;
       flex-direction: column;
+      background-color: #d4b8e2;
     }
-
-
 
     .card-img {
       width: 150px;
@@ -61,11 +107,28 @@
 
     .btn {
       align-self: flex-end;
+      color: white;
+      transition: background-color 0.3s, color 0.3s;
+    }
+
+    .btn:hover {
+      background-color: #5e8c1b;
+      color: white;
+    }
+
+    .btn-outline-success {
+      color: #77af24;
+      border-color: #77af24;
+    }
+
+    .btn-outline-success:hover {
+      background-color: #77af24;
+      color: white;
     }
   </style>
 </head>
 
-<body>
+<body style="background-color: rgb(245, 207, 255);">
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
     crossorigin="anonymous"></script>
@@ -76,26 +139,32 @@
     integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy"
     crossorigin="anonymous"></script>
 
-  <nav class="navbar navbar-expand bg-body-tertiary">
+  <nav class="navbar navbar-expand">
     <div class="container-fluid">
       <a class="navbar-brand" href="home.html">PWM</a>
-
-      <ul class="navbar-nav">
-        <li class="nav-item">
-          <a class="nav-link" href="popolari.html">Popolari</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="profilo-utente.html">Profilo Utente</a>
-        </li>
-      </ul>
-      <form class="d-flex ms-auto" role="search" onsubmit="searchCards(event)">
-        <input id="searchInput" class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-        <button class="btn btn-outline-success" type="submit">Search</button>
-      </form>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a class="nav-link" href="popolari.html">Popolari</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="profilo-utente.html">Profilo Utente</a>
+          </li>
+        </ul>
+        <form class="d-flex ms-auto" role="search" onsubmit="searchCards(event)">
+          <input id="searchInput" class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+          <button class="btn btn-outline-success" type="submit">Search</button>
+        </form>
+      </div>
     </div>
   </nav>
 
-  <div class="scheda-film">
+  <br>
+  <div class="scheda-film" style="margin-left : 20px;">
     <div class="row d-flex flex-nowrap">
       <div class="col-md-3 col-sm-3 col-3" style="min-width: 200px; flex: 0 0 auto; max-width: 210px;">
         <img id="film-img-top" alt="..." class="img-fluid" style="max-width: 100%; height: auto;">
@@ -115,32 +184,32 @@
       </div>
 
     </div>
-    <div id="voti" class="row">
-      <h3>Voti</h3>
-      <div class="row">
-        <div class="col">
-          <h5>Utenti</h5>
-          <p id="utenti"></p>
-        </div>
-        <div class="col">
-          <h5>Media</h5>
-          <p id="media"></p>
-        </div>
+    <div id="voti" class="row my-4">
+      <h3 class="mb-3">Voti</h3>
+      <div class="row text-center">
+      <div class="col">
+        <h5>Utenti</h5>
+        <p id="utenti" class="fs-4 fw-bold"></p>
+      </div>
+      <div class="col">
+        <h5>Media</h5>
+        <p id="media" class="fs-4 fw-bold"></p>
+      </div>
       </div>
     </div>
-    <div id="vota" class="row mt-4">
-      <h3 class="text-center mb-3">Vota</h3>
-      <div class="d-flex justify-content-center gap-2 flex-wrap">
-        <button value="1" class="btn btn-outline-primary" onclick="vote(this.value)">1</button>
-        <button value="2" class="btn btn-outline-primary" onclick="vote(this.value)">2</button>
-        <button value="3" class="btn btn-outline-primary" onclick="vote(this.value)">3</button>
-        <button value="4" class="btn btn-outline-primary" onclick="vote(this.value)">4</button>
-        <button value="5" class="btn btn-outline-primary" onclick="vote(this.value)">5</button>
-        <button value="6" class="btn btn-outline-primary" onclick="vote(this.value)">6</button>
-        <button value="7" class="btn btn-outline-primary" onclick="vote(this.value)">7</button>
-        <button value="8" class="btn btn-outline-primary" onclick="vote(this.value)">8</button>
-        <button value="9" class="btn btn-outline-primary" onclick="vote(this.value)">9</button>
-        <button value="10" class="btn btn-outline-primary" onclick="vote(this.value)">10</button>
+    <div id="vota" class="row mt-5">
+      <h3 class="text-center mb-4">Vota</h3>
+      <div class="d-flex justify-content-center gap-3 flex-wrap">
+      <button value="1" class="btn btn-outline-primary px-4 py-2" onclick="vote(this.value)">1</button>
+      <button value="2" class="btn btn-outline-primary px-4 py-2" onclick="vote(this.value)">2</button>
+      <button value="3" class="btn btn-outline-primary px-4 py-2" onclick="vote(this.value)">3</button>
+      <button value="4" class="btn btn-outline-primary px-4 py-2" onclick="vote(this.value)">4</button>
+      <button value="5" class="btn btn-outline-primary px-4 py-2" onclick="vote(this.value)">5</button>
+      <button value="6" class="btn btn-outline-primary px-4 py-2" onclick="vote(this.value)">6</button>
+      <button value="7" class="btn btn-outline-primary px-4 py-2" onclick="vote(this.value)">7</button>
+      <button value="8" class="btn btn-outline-primary px-4 py-2" onclick="vote(this.value)">8</button>
+      <button value="9" class="btn btn-outline-primary px-4 py-2" onclick="vote(this.value)">9</button>
+      <button value="10" class="btn btn-outline-primary px-4 py-2" onclick="vote(this.value)">10</button>
       </div>
     </div>
   </div>
@@ -174,135 +243,138 @@
           </div>
         </div>
       </div>
+    </div>
+
+    <br>
 
 
-      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous">
 
-        </script>
-      <script>
-        var parametri = new URLSearchParams(window.location.search);
-        var id_film = parametri.get("id");
-        const apiKey = "7cd2c934ca84023b4bf1c31dd21ceda2";
-        const apiUrl = `https://api.themoviedb.org/3/movie/${id_film}?api_key=${apiKey}&language=it-IT`;
+      </script>
+    <script>
+      var parametri = new URLSearchParams(window.location.search);
+      var id_film = parametri.get("id");
+      const apiKey = "7cd2c934ca84023b4bf1c31dd21ceda2";
+      const apiUrl = `https://api.themoviedb.org/3/movie/${id_film}?api_key=${apiKey}&language=it-IT`;
 
-        fetch(apiUrl)
-          .then(res => {
-            if (!res.ok) {
-              throw new Error(`HTTP error! status: ${res.status}`);
-            }
-            return res.json();
-          })
-          .then(film => {
-            document.getElementById("film-year").innerHTML = "(" + film.release_date.substring(0, 4) + ")";
-            document.getElementById("film-title").innerHTML = film.original_title;
-            document.getElementById("film-genre").innerHTML = film.genres.map(genre => genre.name).join(", ");
-            document.getElementById("film-duration").innerHTML = film.runtime + "m";
-            document.getElementById("film-text").innerHTML = film.overview;
-            document.getElementById("film-img-top").src = "https://image.tmdb.org/t/p/original" + film.poster_path;
+      fetch(apiUrl)
+        .then(res => {
+          if (!res.ok) {
+            throw new Error(`HTTP error! status: ${res.status}`);
+          }
+          return res.json();
+        })
+        .then(film => {
+          document.getElementById("film-year").innerHTML = "(" + film.release_date.substring(0, 4) + ")";
+          document.getElementById("film-title").innerHTML = film.original_title;
+          document.getElementById("film-genre").innerHTML = film.genres.map(genre => genre.name).join(", ");
+          document.getElementById("film-duration").innerHTML = film.runtime + "m";
+          document.getElementById("film-text").innerHTML = film.overview;
+          document.getElementById("film-img-top").src = "https://image.tmdb.org/t/p/original" + film.poster_path;
+          document.getElementById("utenti").innerHTML = film.vote_count;
+          document.getElementById("media").innerHTML = film.vote_average.toFixed(1);
+
+          window.vote = function (voto) {
+            film.vote_count += 1;
+            film.vote_average = ((film.vote_average * (film.vote_count - 1)) + parseInt(voto)) / film.vote_count;
             document.getElementById("utenti").innerHTML = film.vote_count;
             document.getElementById("media").innerHTML = film.vote_average.toFixed(1);
-
-            window.vote = function (voto) {
-              film.vote_count += 1;
-              film.vote_average = ((film.vote_average * (film.vote_count - 1)) + parseInt(voto)) / film.vote_count;
-              document.getElementById("utenti").innerHTML = film.vote_count;
-              document.getElementById("media").innerHTML = film.vote_average.toFixed(1);
-            };
+          };
 
 
-          })
-          .catch(err => console.error(err));
+        })
+        .catch(err => console.error(err));
 
-        fetch(`https://api.themoviedb.org/3/movie/${id_film}/credits?api_key=${apiKey}&language=it-IT`)
+      fetch(`https://api.themoviedb.org/3/movie/${id_film}/credits?api_key=${apiKey}&language=it-IT`)
+        .then(res => {
+          if (!res.ok) {
+            throw new Error(`HTTP error! status: ${res.status}`);
+          }
+          return res.json();
+        })
+        .then(element => {
+          const cast = element.cast;
+          const modelloCast = document.getElementById("modello-cast");
+          const container = modelloCast.parentNode;
+          const maxActors = Math.min(10, cast.length);
+          if (cast.length === 0) {
+            const noActors = document.createElement("div");
+            noActors.className = "col-12 text-center";
+            noActors.innerHTML = "<p>Nessuna informazione sul cast disponibile</p>";
+            container.appendChild(noActors);
+          } else {
+            for (let i = 0; i < maxActors; i++) {
+              if (cast[i]) {
+                const clone = modelloCast.cloneNode(true);
+                clone.querySelector(".actor-name").textContent = cast[i].name;
+                clone.querySelector(".character-name").textContent = cast[i].character;
+                clone.querySelector(".btn").href = "scheda-attore.html?id=" + cast[i].id;
+
+                if (cast[i].profile_path) {
+                  clone.querySelector(".card-img").src = "https://image.tmdb.org/t/p/w200" + cast[i].profile_path;
+                } else {
+                  clone.querySelector(".card-img").src = "https://via.placeholder.com/200x300?text=No+Image";
+                }
+
+                clone.id = "cast-" + cast[i].id;
+                clone.classList.remove("d-none");
+
+                container.appendChild(clone);
+              }
+            }
+          }
+        })
+        .catch(err => console.error("Errore nel caricamento del cast:", err));
+
+      function searchCards(event) {
+        document.querySelector(".scheda-film").classList.add("d-none");
+        document.querySelector(".container").classList.remove("d-none");
+        event.preventDefault();
+        var searchValue = document.getElementById("searchInput").value.toLowerCase();
+        var modello = document.getElementById("modello");
+        document.querySelectorAll(".col-lg-2.col-md-3:not(#modello)").forEach(el => el.remove());
+
+        const url = `https://api.themoviedb.org/3/search/movie?include_adult=false&language=it-IT&page=1&query=${encodeURIComponent(searchValue)}`;
+        const options = {
+          method: 'GET',
+          headers: {
+            accept: 'application/json',
+            Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI3Y2QyYzkzNGNhODQwMjNiNGJmMWMzMWRkMjFjZWRhMiIsIm5iZiI6MTc0MzUxNjUzMy42MjYsInN1YiI6IjY3ZWJmMzc1ZDc2YzE1OWExNWZiMWM2ZiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.K-O8_L0X60b4VPzJUeAuIoX6UUqzmDxS5DrCZIZUOtc'
+          }
+        };
+
+        fetch(url, options)
           .then(res => {
             if (!res.ok) {
               throw new Error(`HTTP error! status: ${res.status}`);
             }
             return res.json();
           })
-          .then(element => {
-            const cast = element.cast;
-            const modelloCast = document.getElementById("modello-cast");
-            const container = modelloCast.parentNode;
-            const maxActors = Math.min(10, cast.length);
-            if (cast.length === 0) {
-              const noActors = document.createElement("div");
-              noActors.className = "col-12 text-center";
-              noActors.innerHTML = "<p>Nessuna informazione sul cast disponibile</p>";
-              container.appendChild(noActors);
+          .then(json => {
+            if (json.results.length === 0) {
+              var container = document.querySelector(".row");
+              var noResults = document.createElement("div");
+              noResults.className = "col-12 text-center mt-4";
+              noResults.innerHTML = "<h3>Nessun risultato trovato per '" + searchValue + "'</h3>";
+              modello.after(noResults);
             } else {
-              for (let i = 0; i < maxActors; i++) {
-                if (cast[i]) {
-                  const clone = modelloCast.cloneNode(true);
-                  clone.querySelector(".actor-name").textContent = cast[i].name;
-                  clone.querySelector(".character-name").textContent = cast[i].character;
-                  clone.querySelector(".btn").href = "scheda-attore.html?id=" + cast[i].id;
+              json.results.forEach(element => {
+                var clone = modello.cloneNode(true);
+                clone.getElementsByClassName("card-title")[0].innerHTML = element.original_title;
+                clone.getElementsByClassName("card-text")[0].innerHTML = element.overview;
+                clone.getElementsByClassName("btn")[0].href = "scheda-film.html?id=" + element.id;
+                clone.getElementsByClassName("card-img-top")[0].src = "https://image.tmdb.org/t/p/w500" + element.poster_path;
 
-                  if (cast[i].profile_path) {
-                    clone.querySelector(".card-img").src = "https://image.tmdb.org/t/p/w200" + cast[i].profile_path;
-                  } else {
-                    clone.querySelector(".card-img").src = "https://via.placeholder.com/200x300?text=No+Image";
-                  }
-
-                  clone.id = "cast-" + cast[i].id;
-                  clone.classList.remove("d-none");
-
-                  container.appendChild(clone);
-                }
-              }
+                clone.classList.remove("d-none");
+                clone.id = element.id;
+                modello.after(clone);
+              });
             }
           })
-          .catch(err => console.error("Errore nel caricamento del cast:", err));
-
-        function searchCards(event) {
-          document.querySelector(".scheda-film").classList.add("d-none");
-          document.querySelector(".container").classList.remove("d-none");
-          event.preventDefault();
-          var searchValue = document.getElementById("searchInput").value.toLowerCase();
-          var modello = document.getElementById("modello");
-          document.querySelectorAll(".col-lg-2.col-md-3:not(#modello)").forEach(el => el.remove());
-
-          const url = `https://api.themoviedb.org/3/search/movie?include_adult=false&language=it-IT&page=1&query=${encodeURIComponent(searchValue)}`;
-          const options = {
-            method: 'GET',
-            headers: {
-              accept: 'application/json',
-              Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI3Y2QyYzkzNGNhODQwMjNiNGJmMWMzMWRkMjFjZWRhMiIsIm5iZiI6MTc0MzUxNjUzMy42MjYsInN1YiI6IjY3ZWJmMzc1ZDc2YzE1OWExNWZiMWM2ZiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.K-O8_L0X60b4VPzJUeAuIoX6UUqzmDxS5DrCZIZUOtc'
-            }
-          };
-
-          fetch(url, options)
-            .then(res => {
-              if (!res.ok) {
-                throw new Error(`HTTP error! status: ${res.status}`);
-              }
-              return res.json();
-            })
-            .then(json => {
-              if (json.results.length === 0) {
-                var container = document.querySelector(".row");
-                var noResults = document.createElement("div");
-                noResults.className = "col-12 text-center mt-4";
-                noResults.innerHTML = "<h3>Nessun risultato trovato per '" + searchValue + "'</h3>";
-                modello.after(noResults);
-              } else {
-                json.results.forEach(element => {
-                  var clone = modello.cloneNode(true);
-                  clone.getElementsByClassName("card-title")[0].innerHTML = element.original_title;
-                  clone.getElementsByClassName("card-text")[0].innerHTML = element.overview;
-                  clone.getElementsByClassName("btn")[0].href = "scheda-film.html?id=" + element.id;
-                  clone.getElementsByClassName("card-img-top")[0].src = "https://image.tmdb.org/t/p/w500" + element.poster_path;
-
-                  clone.classList.remove("d-none");
-                  clone.id = element.id;
-                  modello.after(clone);
-                });
-              }
-            })
-            .catch(err => console.error(err));
-        }
-      </script>
+          .catch(err => console.error(err));
+      }
+    </script>
 </body>
 
 </html>

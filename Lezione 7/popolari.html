@@ -8,16 +8,28 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <style>
+        body,
+        nav {
+            margin: 0;
+            padding: 0;
+            border: none;
+            width: 100vw;
+            background-color: #d4b8e2;
+        }
+
         .card {
             height: 100%;
             display: flex;
             flex-direction: column;
+            border: 1px #4a2c5b;
+            box-shadow: 0 4px 15px #4a2c5b;
         }
 
         .card-body {
             flex-grow: 1;
             display: flex;
             flex-direction: column;
+            background-color: #d4b8e2;
         }
 
         .card-text {
@@ -30,13 +42,70 @@
             text-overflow: ellipsis;
         }
 
+        .card-img-top {
+            height: 300px;
+            object-fit: cover;
+        }
+
         .btn {
             align-self: flex-end;
+            color: white;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .btn:hover {
+            background-color: #5e8c1b;
+            color: white;
+        }
+
+
+        .navbar-brand {
+            color: #4a2c5b;
+            font-weight: bold;
+        }
+
+        .navbar-nav .nav-link {
+            color: #4a2c5b;
+        }
+
+        .navbar-nav .nav-link.active {
+            color: #77af24;
+            font-weight: bold;
+        }
+
+        .form-control {
+            border-color: #d4b8e2;
+        }
+
+        .form-control:focus {
+            border-color: #77af24;
+            box-shadow: 0 0 0 0.2rem rgba(119, 175, 36, 0.25);
+        }
+
+        .btn-outline-success {
+            color: #77af24;
+            border-color: #77af24;
+        }
+
+        .btn-outline-success:hover {
+            background-color: #77af24;
+            color: white;
+        }
+
+        #pagina,
+        #cambiolingua {
+            border-color: #d4b8e2;
+        }
+
+        #pagina:focus,
+        #cambiolingua:focus {
+            border-color: #77af24;
+            box-shadow: 0 0 0 0.2rem rgba(119, 175, 36, 0.25);
         }
     </style>
 </head>
 
-<body>
+<body style="background-color: rgb(245, 207, 255);">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
         crossorigin="anonymous"></script>
@@ -47,7 +116,7 @@
         integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy"
         crossorigin="anonymous"></script>
 
-    <nav class="navbar navbar-expand bg-body-tertiary">
+    <nav class="navbar navbar-expand">
         <div class="container-fluid">
             <a class="navbar-brand" href="home.html">PWM</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
@@ -66,7 +135,12 @@
                 <form class="d-flex ms-auto" role="search" onsubmit="searchCards(event)">
                     <input id="searchInput" class="form-control me-2" type="search" placeholder="Search"
                         aria-label="Search">
-                    <button class="btn btn-outline-success" type="submit">Search</button>
+                    <button class="btn btn-outline-success" type="submit"
+                        style="transition: background-color 0.3s, color 0.3s;"
+                        onmouseover="this.style.backgroundColor='rgb(119, 175, 36)'; this.style.color='white';"
+                        onmouseout="this.style.backgroundColor='transparent'; this.style.color='rgb(25, 135, 84)';">
+                        Search
+                    </button>
                 </form>
             </div>
         </div>
@@ -91,7 +165,8 @@
                     <div class="card-body">
                         <h5 class="card-title"></h5>
                         <p class="card-text"></p>
-                        <a class="btn btn-primary mt-auto align-self-end">più info</a>
+                        <a class="btn btn-primary mt-auto align-self-end"
+                            style="background-color: rgb(119, 175, 36); border-color: rgb(122, 174, 45);">più info</a>
                     </div>
                 </div>
             </div>
@@ -125,20 +200,16 @@
             }
 
             var select_lingua = document.getElementById("cambiolingua");
-            // Aggiungi opzione predefinita
             select_lingua.options[0] = new Option("Italiano", "it-IT");
 
-            // Popola il select con le lingue
             for (var i = 0; i < lingue.length; i++) {
                 var nome_lingua = lingue[i].english_name;
                 var codice_lingua = lingue[i].iso_639_1;
                 select_lingua.options[i + 1] = new Option(nome_lingua, codice_lingua);
             }
 
-            // Aggiungi event listener per il cambio lingua
             select_lingua.addEventListener('change', mostraPopolari);
 
-            // Mostra i film popolari dopo aver caricato le lingue
             mostraPopolari();
         }
         function mostraPopolari() {
@@ -146,11 +217,9 @@
             var container = modello.parentNode;
             document.querySelectorAll(".col-lg-2.col-md-3:not(#modello)").forEach(el => el.remove());
 
-            // Ottieni i valori per pagina e lingua
             var page = document.getElementById('pagina').value;
             var language = document.getElementById('cambiolingua').value;
 
-            // Fetch dei film popolari
             fetch(`https://api.themoviedb.org/3/movie/popular?language=${language}&page=${page}&api_key=${key}`)
                 .then(res => res.json())
                 .then(popolari => {
@@ -158,20 +227,16 @@
                         var clone = modello.cloneNode(true);
                         var film = popolari.results[i];
 
-                        // Popola la card
                         clone.getElementsByClassName('card-title')[0].innerHTML = film.title || film.original_title;
                         clone.getElementsByClassName('card-text')[0].innerHTML = film.overview;
 
-                        // Aggiungi il percorso base dell'immagine
                         var imgPath = film.poster_path ?
                             "https://image.tmdb.org/t/p/w500" + film.poster_path :
                             "https://via.placeholder.com/150x225?text=No+Image";
                         clone.getElementsByTagName('img')[0].src = imgPath;
 
-                        // Imposta il link per i dettagli
                         clone.getElementsByTagName('a')[0].href = `scheda-film.html?id=${film.id}&lingua=${language}`;
 
-                        // Mostra la card
                         clone.classList.remove('d-none');
                         clone.id = film.id;
                         container.appendChild(clone);

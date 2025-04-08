@@ -9,34 +9,23 @@
         integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 
     <style>
+        body,
+        nav {
+            margin: 0;
+            padding: 0;
+            border: none;
+            width: 100%;
+            background-color: #d4b8e2;
+            overflow-x: hidden;
+        }
+
         .card {
             width: 150px;
-
             height: 100%;
             display: flex;
             flex-direction: column;
-        }
-
-        .scrollmenu {
-            overflow-x: auto;
-            white-space: nowrap;
-        }
-
-        .scrollmenu .col {
-            display: inline-block;
-            float: none;
-        }
-
-        .card-body {
-            flex-grow: 1;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .card-img {
-            width: 150px;
-            height: 225px;
-            object-fit: cover;
+            border: 1px #4a2c5b;
+            box-shadow: 0 4px 15px #4a2c5b;
         }
 
         .film-name,
@@ -45,6 +34,37 @@
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
+
+        }
+
+        .scrollmenu {
+            overflow-x: auto;
+            white-space: nowrap;
+            width: 100%;
+            margin-left: 0;
+            padding-left: 20px;
+            border: 1px #4a2c5b;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px #4a2c5b;
+        }
+
+        .scrollmenu .col {
+            display: inline-block;
+            float: none;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+        }
+
+        .scrollmenu::-webkit-scrollbar {
+            display: none;
+        }
+
+
+        .card-body {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            background-color: #d4b8e2;
         }
 
         .card-text {
@@ -57,13 +77,60 @@
             text-overflow: ellipsis;
         }
 
+        .card-img {
+            width: 150px;
+            height: 225px;
+            object-fit: cover;
+        }
+
         .btn {
             align-self: flex-end;
+            color: white;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .btn:hover {
+            background-color: #5e8c1b;
+            color: white;
+        }
+
+
+        .navbar-brand {
+            color: #4a2c5b;
+            font-weight: bold;
+        }
+
+        .navbar-nav .nav-link {
+            color: #4a2c5b;
+        }
+
+        .navbar-nav .nav-link.active {
+            color: #77af24;
+            font-weight: bold;
+        }
+
+        .form-control {
+            border-color: #d4b8e2;
+        }
+
+        .form-control:focus {
+            border-color: #77af24;
+            box-shadow: 0 0 0 0.2rem rgba(119, 175, 36, 0.25);
+        }
+
+        .btn-outline-success {
+            color: #77af24;
+            border-color: #77af24;
+        }
+
+        .btn-outline-success:hover {
+            background-color: #77af24;
+            color: white;
         }
     </style>
 </head>
 
-<body>
+<body style="background-color: rgb(245, 207, 255); ">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
         crossorigin="anonymous"></script>
@@ -74,7 +141,7 @@
         integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy"
         crossorigin="anonymous"></script>
 
-    <nav class="navbar navbar-expand bg-body-tertiary">
+    <nav class="navbar navbar-expand">
         <div class="container-fluid">
             <a class="navbar-brand" href="home.html">PWM</a>
 
@@ -94,7 +161,8 @@
         </div>
     </nav>
 
-    <div class="scheda-attore">
+    <br>
+    <div class="scheda-attore" style="margin-left: 20px;">
         <div class="row d-flex flex-nowrap">
             <div class="col-md-3 col-sm-3 col-3" style="min-width: 200px; flex: 0 0 auto; max-width: 210px;">
                 <img id="actor-img-top" alt="..." class="img-fluid" style="max-width: 100%; height: auto;">
@@ -133,10 +201,24 @@
                 </div>
             </div>
         </div>
+        <div class="container d-none">
+            <div class="row row-cols-2 row-cols-md-4 row-cols-lg-5 g-3">
+              <div id="modello" class="col-lg-2 col-md-3 d-none">
+                <div class="card">
+                  <img class="card-img-top" alt="...">
+                  <div class="card-body">
+                    <h5 class="card-title"></h5>
+                    <p class="card-text"></p>
+                    <a class="btn btn-primary mt-auto align-self-end">più info</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         <div class="container mt-5">
             <h2 class="mb-4">Top Films</h2>
 
-            <div class="scrollmenu d-flex gap-3 p-2">
+            <div class="scrollmenu d-flex gap-3 p-2" style="background-color: #d4b8e2;">
                 <div class="col d-none" id="modello-films">
                     <div class="card h-100 border-light">
                         <div class="card">
@@ -149,126 +231,127 @@
                         </div>
                     </div>
                 </div>
+            </div>
+        </div>
+        <br>
 
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous">
 
-                <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-                    integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
-                    crossorigin="anonymous">
+            </script>
+        <script>
+            var parametri = new URLSearchParams(window.location.search);
+            var id_actor = parametri.get("id");
+            const apiKey = "7cd2c934ca84023b4bf1c31dd21ceda2";
+            const apiUrl = `https://api.themoviedb.org/3/person/${id_actor}?api_key=${apiKey}&language=it-IT`;
 
-                    </script>
-                <script>
-                    var parametri = new URLSearchParams(window.location.search);
-                    var id_actor = parametri.get("id");
-                    const apiKey = "7cd2c934ca84023b4bf1c31dd21ceda2";
-                    const apiUrl = `https://api.themoviedb.org/3/person/${id_actor}?api_key=${apiKey}&language=it-IT`;
-
-                    fetch(apiUrl)
-                        .then(res => {
-                            if (!res.ok) {
-                                throw new Error(`HTTP error! status: ${res.status}`);
-                            }
-                            return res.json();
-                        })
-                        .then(actor => {
-                            document.getElementById("actor-birth").innerHTML = "(" + actor.birthday + ")";
-                            document.getElementById("actor-death").innerHTML = actor.deathday ? "(" + actor.deathday + ")" : "N/A";
-                            document.getElementById("actor-name").innerHTML = actor.name;
-                            document.getElementById("actor-bio").innerHTML = actor.biography;
-                            document.getElementById("actor-img-top").src = "https://image.tmdb.org/t/p/original" + actor.profile_path;
-
-                        })
-                        .then(actor => {
-                            const apiCreditsUrl = `https://api.themoviedb.org/3/person/${id_actor}/movie_credits?api_key=${apiKey}&language=it-IT`;
-                            return fetch(apiCreditsUrl).then(res => {
-                                if (!res.ok) {
-                                    throw new Error(`HTTP error! status: ${res.status}`);
-                                }
-                                return res.json();
-                            });
-                        })
-                        .then(element => {
-                            const films = element.cast;
-                            const modelloFilms = document.getElementById("modello-films");
-                            const container = modelloFilms.parentNode;
-                            const maxFilms = Math.min(10, films.length);
-                            if (films.length === 0) {
-                                const noFilms = document.createElement("div");
-                                noFilms.className = "col-12 text-center";
-                                noFilms.innerHTML = "<p>Nessuna informazione sui film disponibile</p>";
-                                container.appendChild(noFilms);
-                            } else {
-                                for (let i = 0; i < maxFilms; i++) {
-                                    const clone = modelloFilms.cloneNode(true);
-                                    if (films[i]) {
-
-                                        clone.querySelector(".card-img").src = "https://image.tmdb.org/t/p/w200" + films[i].poster_path;
-                                        clone.querySelector(".film-name").textContent = films[i].original_title;
-                                        clone.querySelector(".character-name").textContent = films[i].character;
-                                        clone.querySelector(".btn").href = "scheda-film.html?id=" + films[i].id;
-                                    }
-
-                                    if (films[i].poster_path) {
-                                        clone.querySelector(".card-img").src = "https://image.tmdb.org/t/p/w200" + films[i].poster_path;
-                                    } else {
-                                        clone.querySelector(".card-img").src = "https://via.placeholder.com/200x300?text=No+Image";
-                                    }
-
-                                    clone.id = "film-" + films[i].id;
-                                    clone.classList.remove("d-none");
-                                    container.appendChild(clone);
-                                }
-                            }
-                        })
-                        .catch(err => console.error("Errore nel caricamento del film:", err));
-
-                    function searchCards(event) {
-                        document.querySelector(".scheda-film").classList.add("d-none");
-                        document.querySelector(".container").classList.remove("d-none");
-                        event.preventDefault();
-                        var searchValue = document.getElementById("searchInput").value.toLowerCase();
-                        var modello = document.getElementById("modello");
-                        document.querySelectorAll(".col-lg-2.col-md-3:not(#modello)").forEach(el => el.remove());
-
-                        const url = `https://api.themoviedb.org/3/search/movie?include_adult=false&language=it-IT&page=1&query=${encodeURIComponent(searchValue)}`;
-                        const options = {
-                            method: 'GET',
-                            headers: {
-                                accept: 'application/json',
-                                Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI3Y2QyYzkzNGNhODQwMjNiNGJmMWMzMWRkMjFjZWRhMiIsIm5iZiI6MTc0MzUxNjUzMy42MjYsInN1YiI6IjY3ZWJmMzc1ZDc2YzE1OWExNWZiMWM2ZiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.K-O8_L0X60b4VPzJUeAuIoX6UUqzmDxS5DrCZIZUOtc'
-                            }
-                        };
-
-                        fetch(url, options)
-                            .then(res => {
-                                if (!res.ok) {
-                                    throw new Error(`HTTP error! status: ${res.status}`);
-                                }
-                                return res.json();
-                            })
-                            .then(json => {
-                                if (json.results.length === 0) {
-                                    var container = document.querySelector(".row");
-                                    var noResults = document.createElement("div");
-                                    noResults.className = "col-12 text-center mt-4";
-                                    noResults.innerHTML = "<h3>Nessun risultato trovato per '" + searchValue + "'</h3>";
-                                    modello.after(noResults);
-                                } else {
-                                    json.results.forEach(element => {
-                                        var clone = modello.cloneNode(true);
-                                        clone.getElementsByClassName("card-title")[0].innerHTML = element.original_title;
-                                        clone.getElementsByClassName("card-text")[0].innerHTML = element.overview;
-                                        clone.getElementsByClassName("btn")[0].href = "scheda-film.html?id=" + film.id;
-                                        clone.getElementsByClassName("card-img-top")[0].src = "https://image.tmdb.org/t/p/w500" + element.poster_path;
-
-                                        clone.classList.remove("d-none");
-                                        clone.id = element.id;
-                                        modello.after(clone);
-                                    });
-                                }
-                            })
-                            .catch(err => console.error(err));
+            fetch(apiUrl)
+                .then(res => {
+                    if (!res.ok) {
+                        throw new Error(`HTTP error! status: ${res.status}`);
                     }
-                </script>
+                    return res.json();
+                })
+                .then(actor => {
+                    document.getElementById("actor-birth").innerHTML = "(" + actor.birthday + ")";
+                    document.getElementById("actor-death").innerHTML = actor.deathday ? "(" + actor.deathday + ")" : "N/A";
+                    document.getElementById("actor-name").innerHTML = actor.name;
+                    document.getElementById("actor-bio").innerHTML = actor.biography;
+                    document.getElementById("actor-img-top").src = "https://image.tmdb.org/t/p/original" + actor.profile_path;
+
+                })
+                .then(actor => {
+                    const apiCreditsUrl = `https://api.themoviedb.org/3/person/${id_actor}/movie_credits?api_key=${apiKey}&language=it-IT`;
+                    return fetch(apiCreditsUrl).then(res => {
+                        if (!res.ok) {
+                            throw new Error(`HTTP error! status: ${res.status}`);
+                        }
+                        return res.json();
+                    });
+                })
+                .then(element => {
+                    const films = element.cast;
+                    const modelloFilms = document.getElementById("modello-films");
+                    const container = modelloFilms.parentNode;
+                    const maxFilms = Math.min(10, films.length);
+                    if (films.length === 0) {
+                        const noFilms = document.createElement("div");
+                        noFilms.className = "col-12 text-center";
+                        noFilms.innerHTML = "<p>Nessuna informazione sui film disponibile</p>";
+                        container.appendChild(noFilms);
+                    } else {
+                        for (let i = 0; i < maxFilms; i++) {
+                            const clone = modelloFilms.cloneNode(true);
+                            if (films[i]) {
+
+                                clone.querySelector(".card-img").src = "https://image.tmdb.org/t/p/w200" + films[i].poster_path;
+                                clone.querySelector(".film-name").textContent = films[i].original_title;
+                                clone.querySelector(".character-name").textContent = films[i].character;
+                                clone.querySelector(".btn").href = "scheda-film.html?id=" + films[i].id;
+                            }
+
+                            if (films[i].poster_path) {
+                                clone.querySelector(".card-img").src = "https://image.tmdb.org/t/p/w200" + films[i].poster_path;
+                            } else {
+                                clone.querySelector(".card-img").src = "https://via.placeholder.com/200x300?text=No+Image";
+                            }
+
+                            clone.id = "film-" + films[i].id;
+                            clone.classList.remove("d-none");
+                            container.appendChild(clone);
+                        }
+                    }
+                })
+                .catch(err => console.error("Errore nel caricamento del film:", err));
+
+            function searchCards(event) {
+                document.querySelector(".scheda-film").classList.add("d-none");
+                document.querySelector(".container").classList.remove("d-none");
+                event.preventDefault();
+                var searchValue = document.getElementById("searchInput").value.toLowerCase();
+                var modello = document.getElementById("modello");
+                document.querySelectorAll(".col-lg-2.col-md-3:not(#modello)").forEach(el => el.remove());
+
+                const url = `https://api.themoviedb.org/3/search/movie?include_adult=false&language=it-IT&page=1&query=${encodeURIComponent(searchValue)}`;
+                const options = {
+                    method: 'GET',
+                    headers: {
+                        accept: 'application/json',
+                        Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI3Y2QyYzkzNGNhODQwMjNiNGJmMWMzMWRkMjFjZWRhMiIsIm5iZiI6MTc0MzUxNjUzMy42MjYsInN1YiI6IjY3ZWJmMzc1ZDc2YzE1OWExNWZiMWM2ZiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.K-O8_L0X60b4VPzJUeAuIoX6UUqzmDxS5DrCZIZUOtc'
+                    }
+                };
+
+                fetch(url, options)
+                    .then(res => {
+                        if (!res.ok) {
+                            throw new Error(`HTTP error! status: ${res.status}`);
+                        }
+                        return res.json();
+                    })
+                    .then(json => {
+                        if (json.results.length === 0) {
+                            var container = document.querySelector(".row");
+                            var noResults = document.createElement("div");
+                            noResults.className = "col-12 text-center mt-4";
+                            noResults.innerHTML = "<h3>Nessun risultato trovato per '" + searchValue + "'</h3>";
+                            modello.after(noResults);
+                        } else {
+                            json.results.forEach(element => {
+                                var clone = modello.cloneNode(true);
+                                clone.getElementsByClassName("card-title")[0].innerHTML = element.original_title;
+                                clone.getElementsByClassName("card-text")[0].innerHTML = element.overview;
+                                clone.getElementsByClassName("btn")[0].href = "scheda-film.html?id=" + element.id;
+                                clone.getElementsByClassName("card-img-top")[0].src = "https://image.tmdb.org/t/p/w500" + element.poster_path;
+
+                                clone.classList.remove("d-none");
+                                clone.id = element.id;
+                                modello.after(clone);
+                            });
+                        }
+                    })
+                    .catch(err => console.error(err));
+            }
+        </script>
 </body>
 
 </html>
