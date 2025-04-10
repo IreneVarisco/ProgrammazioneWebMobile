@@ -1,0 +1,16 @@
+<html>
+
+<body>
+    <input type="text" id="password">
+    <button onclick="validazione()">Valida</button>
+    <script>
+        function validazione() {
+            const regex = /[0-9A-Za-z-.!]{8,32}/gm
+            const str = document.getElementById("password").value
+            console.log(str)
+            console.log(regex.test(str))
+        }
+    </script>
+</body>
+
+</html>
