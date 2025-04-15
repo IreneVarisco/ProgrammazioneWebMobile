@@ -50,8 +50,7 @@
       box-shadow: 0 4px 15px #4a2c5b;
     }
 
-    .actor-name,
-    .character-name {
+    .profile-name {
       width: 100%;
       white-space: nowrap;
       overflow: hidden;
@@ -156,58 +155,92 @@
       </form>
     </div>
   </nav>
-  <script>
-    function searchCards(event) {
-      event.preventDefault();
-      var searchValue = document.getElementById("searchInput").value.toLowerCase();
-      var modello = document.getElementById("modello");
-      document.querySelectorAll(".col-lg-2.col-md-3:not(#modello)").forEach(el => el.remove());
 
-      const url = `https://api.themoviedb.org/3/search/movie?include_adult=false&language=it-IT&page=1&query=${encodeURIComponent(searchValue)}`;
-      const options = {
-        method: 'GET',
-        headers: {
-          accept: 'application/json',
-          Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI3Y2QyYzkzNGNhODQwMjNiNGJmMWMzMWRkMjFjZWRhMiIsIm5iZiI6MTc0MzUxNjUzMy42MjYsInN1YiI6IjY3ZWJmMzc1ZDc2YzE1OWExNWZiMWM2ZiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.K-O8_L0X60b4VPzJUeAuIoX6UUqzmDxS5DrCZIZUOtc'
-        }
-      };
+  <br>
+  <div class="profilo" style="margin-left: 20px;">
+    <div class="row d-flex flex-nowrap">
+      <div class="col-md-3 col-sm-3 col-3"
+        style="min-width: 200px; flex: 0 0 auto; max-width: 210px; border: 2px solid #4a2c5b;">
+        <img id="profile-img" alt="..." class="img-fluid" style="max-width: 100%; height: auto;">
+      </div>
+      <div id="profile-body" class="col ">
+        <h1 id="profile-name" style=" border: 2px solid green">nome</h1>
+        <div class="row">
+          <div class="col">
+            <h5 id="profile-fav" style=" color: gray; border: 2px solid purple;">fav</h5>
+          </div>
+          <div class="col">
+            <h5 id="boh" style=" color: gray"></h5>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div>
+      <h3>bio</h3>
+      <p id="profile-bio" style="color: gray">
+        sono un gatto yuppie ye
+      </p>
+    </div>
+  </div>
 
-      fetch(url, options)
-        .then(res => {
-          if (!res.ok) {
-            throw new Error(`HTTP error! status: ${res.status}`);
+  <br>
+
+  <div style=" margin-left: 20px;">
+    <a href="modifica-profilo.html" class="btn btn-outline-success">Modifica Profilo</a>
+  </div>
+
+    <script>
+      function searchCards(event) {
+        event.preventDefault();
+        var searchValue = document.getElementById("searchInput").value.toLowerCase();
+        var modello = document.getElementById("modello");
+        document.querySelectorAll(".col-lg-2.col-md-3:not(#modello)").forEach(el => el.remove());
+
+        const url = `https://api.themoviedb.org/3/search/movie?include_adult=false&language=it-IT&page=1&query=${encodeURIComponent(searchValue)}`;
+        const options = {
+          method: 'GET',
+          headers: {
+            accept: 'application/json',
+            Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI3Y2QyYzkzNGNhODQwMjNiNGJmMWMzMWRkMjFjZWRhMiIsIm5iZiI6MTc0MzUxNjUzMy42MjYsInN1YiI6IjY3ZWJmMzc1ZDc2YzE1OWExNWZiMWM2ZiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.K-O8_L0X60b4VPzJUeAuIoX6UUqzmDxS5DrCZIZUOtc'
           }
-          return res.json();
-        })
-        .then(json => {
-          if (json.results.length === 0) {
-            var container = document.querySelector(".row");
-            var noResults = document.createElement("div");
-            noResults.className = "col-12 text-center mt-4";
-            noResults.innerHTML = "<h3>Nessun risultato trovato per '" + searchValue + "'</h3>";
-            modello.after(noResults);
-          } else {
-            json.results.forEach(element => {
-              var clone = modello.cloneNode(true);
-              clone.getElementsByClassName("card-title")[0].innerHTML = element.original_title;
-              clone.getElementsByClassName("card-text")[0].innerHTML = element.overview;
-              clone.getElementsByClassName("btn")[0].href = "scheda-film.html?id=" + element.id;
-              clone.getElementsByClassName("card-img-top")[0].src = "https://image.tmdb.org/t/p/w500" + element.poster_path;
+        };
 
-              clone.classList.remove("d-none");
-              clone.id = element.id;
-              modello.after(clone);
-            });
-          }
-        })
-        .catch(err => console.error(err));
-    }
-    function searchCards(event) {
-      event.preventDefault();
-      const searchValue = document.getElementById("searchInput").value;
-      window.location.href = "popolari.html?searchInput=" + encodeURIComponent(searchValue);
-    }
-  </script>
+        fetch(url, options)
+          .then(res => {
+            if (!res.ok) {
+              throw new Error(`HTTP error! status: ${res.status}`);
+            }
+            return res.json();
+          })
+          .then(json => {
+            if (json.results.length === 0) {
+              var container = document.querySelector(".row");
+              var noResults = document.createElement("div");
+              noResults.className = "col-12 text-center mt-4";
+              noResults.innerHTML = "<h3>Nessun risultato trovato per '" + searchValue + "'</h3>";
+              modello.after(noResults);
+            } else {
+              json.results.forEach(element => {
+                var clone = modello.cloneNode(true);
+                clone.getElementsByClassName("card-title")[0].innerHTML = element.original_title;
+                clone.getElementsByClassName("card-text")[0].innerHTML = element.overview;
+                clone.getElementsByClassName("btn")[0].href = "scheda-film.html?id=" + element.id;
+                clone.getElementsByClassName("card-img-top")[0].src = "https://image.tmdb.org/t/p/w500" + element.poster_path;
+
+                clone.classList.remove("d-none");
+                clone.id = element.id;
+                modello.after(clone);
+              });
+            }
+          })
+          .catch(err => console.error(err));
+      }
+      function searchCards(event) {
+        event.preventDefault();
+        const searchValue = document.getElementById("searchInput").value;
+        window.location.href = "popolari.html?searchInput=" + encodeURIComponent(searchValue);
+      }
+    </script>
 </body>
 
 </html>
