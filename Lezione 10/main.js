@@ -3,7 +3,7 @@ const cors = require('cors');
 const { MongoClient, ObjectId } = require('mongodb');
 
 
-const MongoURL = "mongodb+srv://admin:admin@cluster0.qwrxg2p.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
+const MongoURL = "mongodb+srv://XXXX:XXXX@cluster0.qwrxg2p.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
 const app = express();
 const port = 3001;
 const client = new MongoClient(MongoURL);;
