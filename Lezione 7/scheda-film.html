@@ -164,7 +164,7 @@
   </nav>
 
   <br>
-  
+
   <div class="scheda-film" style="margin-left : 20px;">
     <div class="row d-flex flex-nowrap">
       <div class="col-md-3 col-sm-3 col-3" style="min-width: 200px; flex: 0 0 auto; max-width: 210px;">
@@ -188,29 +188,29 @@
     <div id="voti" class="row my-4">
       <h3 class="mb-3">Voti</h3>
       <div class="row text-center">
-      <div class="col">
-        <h5>Utenti</h5>
-        <p id="utenti" class="fs-4 fw-bold"></p>
-      </div>
-      <div class="col">
-        <h5>Media</h5>
-        <p id="media" class="fs-4 fw-bold"></p>
-      </div>
+        <div class="col">
+          <h5>Utenti</h5>
+          <p id="utenti" class="fs-4 fw-bold"></p>
+        </div>
+        <div class="col">
+          <h5>Media</h5>
+          <p id="media" class="fs-4 fw-bold"></p>
+        </div>
       </div>
     </div>
     <div id="vota" class="row mt-5">
       <h3 class="text-center mb-4">Vota</h3>
       <div class="d-flex justify-content-center gap-3 flex-wrap">
-      <button value="1" class="btn btn-outline-primary px-4 py-2" onclick="vote(this.value)">1</button>
-      <button value="2" class="btn btn-outline-primary px-4 py-2" onclick="vote(this.value)">2</button>
-      <button value="3" class="btn btn-outline-primary px-4 py-2" onclick="vote(this.value)">3</button>
-      <button value="4" class="btn btn-outline-primary px-4 py-2" onclick="vote(this.value)">4</button>
-      <button value="5" class="btn btn-outline-primary px-4 py-2" onclick="vote(this.value)">5</button>
-      <button value="6" class="btn btn-outline-primary px-4 py-2" onclick="vote(this.value)">6</button>
-      <button value="7" class="btn btn-outline-primary px-4 py-2" onclick="vote(this.value)">7</button>
-      <button value="8" class="btn btn-outline-primary px-4 py-2" onclick="vote(this.value)">8</button>
-      <button value="9" class="btn btn-outline-primary px-4 py-2" onclick="vote(this.value)">9</button>
-      <button value="10" class="btn btn-outline-primary px-4 py-2" onclick="vote(this.value)">10</button>
+        <button value="1" class="btn btn-outline-primary px-4 py-2" onclick="vote(this.value)">1</button>
+        <button value="2" class="btn btn-outline-primary px-4 py-2" onclick="vote(this.value)">2</button>
+        <button value="3" class="btn btn-outline-primary px-4 py-2" onclick="vote(this.value)">3</button>
+        <button value="4" class="btn btn-outline-primary px-4 py-2" onclick="vote(this.value)">4</button>
+        <button value="5" class="btn btn-outline-primary px-4 py-2" onclick="vote(this.value)">5</button>
+        <button value="6" class="btn btn-outline-primary px-4 py-2" onclick="vote(this.value)">6</button>
+        <button value="7" class="btn btn-outline-primary px-4 py-2" onclick="vote(this.value)">7</button>
+        <button value="8" class="btn btn-outline-primary px-4 py-2" onclick="vote(this.value)">8</button>
+        <button value="9" class="btn btn-outline-primary px-4 py-2" onclick="vote(this.value)">9</button>
+        <button value="10" class="btn btn-outline-primary px-4 py-2" onclick="vote(this.value)">10</button>
       </div>
     </div>
   </div>
@@ -255,79 +255,79 @@
       </script>
     <script>
       var parametri = new URLSearchParams(window.location.search);
-      if (parametri.has("id")) {       
-      var id_film = parametri.get("id");
-      const apiKey = "7cd2c934ca84023b4bf1c31dd21ceda2";
-      const apiUrl = `https://api.themoviedb.org/3/movie/${id_film}?api_key=${apiKey}&language=it-IT`;
-      
-      fetch(apiUrl)
-        .then(res => {
-          if (!res.ok) {
-            throw new Error(`HTTP error! status: ${res.status}`);
-          }
-          return res.json();
-        })
-        .then(film => {
-          document.getElementById("film-year").innerHTML = "(" + film.release_date.substring(0, 4) + ")";
-          document.getElementById("film-title").innerHTML = film.original_title;
-          document.getElementById("film-genre").innerHTML = film.genres.map(genre => genre.name).join(", ");
-          document.getElementById("film-duration").innerHTML = film.runtime + "m";
-          document.getElementById("film-text").innerHTML = film.overview;
-          document.getElementById("film-img-top").src = "https://image.tmdb.org/t/p/original" + film.poster_path;
-          document.getElementById("utenti").innerHTML = film.vote_count;
-          document.getElementById("media").innerHTML = film.vote_average.toFixed(1);
+      if (parametri.has("id")) {
+        var id_film = parametri.get("id");
+        const apiKey = "7cd2c934ca84023b4bf1c31dd21ceda2";
+        const apiUrl = `https://api.themoviedb.org/3/movie/${id_film}?api_key=${apiKey}&language=it-IT`;
 
-          window.vote = function (voto) {
-            film.vote_count += 1;
-            film.vote_average = ((film.vote_average * (film.vote_count - 1)) + parseInt(voto)) / film.vote_count;
+        fetch(apiUrl)
+          .then(res => {
+            if (!res.ok) {
+              throw new Error(`HTTP error! status: ${res.status}`);
+            }
+            return res.json();
+          })
+          .then(film => {
+            document.getElementById("film-year").innerHTML = "(" + film.release_date.substring(0, 4) + ")";
+            document.getElementById("film-title").innerHTML = film.original_title;
+            document.getElementById("film-genre").innerHTML = film.genres.map(genre => genre.name).join(", ");
+            document.getElementById("film-duration").innerHTML = film.runtime + "m";
+            document.getElementById("film-text").innerHTML = film.overview;
+            document.getElementById("film-img-top").src = "https://image.tmdb.org/t/p/original" + film.poster_path;
             document.getElementById("utenti").innerHTML = film.vote_count;
             document.getElementById("media").innerHTML = film.vote_average.toFixed(1);
-          };
+
+            window.vote = function (voto) {
+              film.vote_count += 1;
+              film.vote_average = ((film.vote_average * (film.vote_count - 1)) + parseInt(voto)) / film.vote_count;
+              document.getElementById("utenti").innerHTML = film.vote_count;
+              document.getElementById("media").innerHTML = film.vote_average.toFixed(1);
+            };
 
 
-        })
-        .catch(err => console.error(err));
+          })
+          .catch(err => console.error(err));
 
-      fetch(`https://api.themoviedb.org/3/movie/${id_film}/credits?api_key=${apiKey}&language=it-IT`)
-        .then(res => {
-          if (!res.ok) {
-            throw new Error(`HTTP error! status: ${res.status}`);
-          }
-          return res.json();
-        })
-        .then(element => {
-          const cast = element.cast;
-          const modelloCast = document.getElementById("modello-cast");
-          const container = modelloCast.parentNode;
-          const maxActors = Math.min(10, cast.length);
-          if (cast.length === 0) {
-            const noActors = document.createElement("div");
-            noActors.className = "col-12 text-center";
-            noActors.innerHTML = "<p>Nessuna informazione sul cast disponibile</p>";
-            container.appendChild(noActors);
-          } else {
-            for (let i = 0; i < maxActors; i++) {
-              if (cast[i]) {
-                const clone = modelloCast.cloneNode(true);
-                clone.querySelector(".actor-name").textContent = cast[i].name;
-                clone.querySelector(".character-name").textContent = cast[i].character;
-                clone.querySelector(".btn").href = "scheda-attore.html?id=" + cast[i].id;
+        fetch(`https://api.themoviedb.org/3/movie/${id_film}/credits?api_key=${apiKey}&language=it-IT`)
+          .then(res => {
+            if (!res.ok) {
+              throw new Error(`HTTP error! status: ${res.status}`);
+            }
+            return res.json();
+          })
+          .then(element => {
+            const cast = element.cast;
+            const modelloCast = document.getElementById("modello-cast");
+            const container = modelloCast.parentNode;
+            const maxActors = Math.min(10, cast.length);
+            if (cast.length === 0) {
+              const noActors = document.createElement("div");
+              noActors.className = "col-12 text-center";
+              noActors.innerHTML = "<p>Nessuna informazione sul cast disponibile</p>";
+              container.appendChild(noActors);
+            } else {
+              for (let i = 0; i < maxActors; i++) {
+                if (cast[i]) {
+                  const clone = modelloCast.cloneNode(true);
+                  clone.querySelector(".actor-name").textContent = cast[i].name;
+                  clone.querySelector(".character-name").textContent = cast[i].character;
+                  clone.querySelector(".btn").href = "scheda-attore.html?id=" + cast[i].id;
 
-                if (cast[i].profile_path) {
-                  clone.querySelector(".card-img").src = "https://image.tmdb.org/t/p/w200" + cast[i].profile_path;
-                } else {
-                  clone.querySelector(".card-img").src = "https://via.placeholder.com/200x300?text=No+Image";
+                  if (cast[i].profile_path) {
+                    clone.querySelector(".card-img").src = "https://image.tmdb.org/t/p/w200" + cast[i].profile_path;
+                  } else {
+                    clone.querySelector(".card-img").src = "https://via.placeholder.com/200x300?text=No+Image";
+                  }
+
+                  clone.id = "cast-" + cast[i].id;
+                  clone.classList.remove("d-none");
+
+                  container.appendChild(clone);
                 }
-
-                clone.id = "cast-" + cast[i].id;
-                clone.classList.remove("d-none");
-
-                container.appendChild(clone);
               }
             }
-          }
-        })
-        .catch(err => console.error("Errore nel caricamento del cast:", err));
+          })
+          .catch(err => console.error("Errore nel caricamento del cast:", err));
       }
 
       function searchCards(event) {
@@ -336,7 +336,7 @@
         window.location.href = "popolari.html?searchInput=" + encodeURIComponent(searchValue);
       }
 
-      
+
     </script>
 </body>
 
