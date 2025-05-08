@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <title>Test API Film</title>
+</head>
+<body>
+    <h1>Test API Film</h1>
+
+    <section>
+        <h2>1. Ottieni tutti i film</h2>
+        <button onclick="getAllMovies()">Mostra tutti</button>
+        <pre id="allMovies"></pre>
+    </section>
+
+    <section>
+        <h2>2. Ottieni film per ID</h2>
+        <input type="text" id="movieId" placeholder="Inserisci ID film">
+        <button onclick="getMovieById()">Cerca</button>
+        <pre id="movieById"></pre>
+    </section>
+
+    <section>
+        <h2>3. Aggiungi un film</h2>
+        <form onsubmit="addMovie(event)">
+            <input type="text" id="title" placeholder="Titolo" required><br>
+            <input type="number" id="year" placeholder="Anno" required><br>
+            <input type="number" id="runtime" placeholder="Durata (min)" required><br>
+            <input type="text" id="actors" placeholder="Attori (virgola separati)" required><br>
+            <input type="text" id="director" placeholder="Regista" required><br>
+            <input type="text" id="plot" placeholder="Trama" required><br>
+            <input type="text" id="genres" placeholder="Generi (virgola separati)" required><br>
+            <button type="submit">Aggiungi</button>
+        </form>
+        <pre id="addResult"></pre>
+    </section>
+
+    <section>
+        <h2>4. Modifica un film</h2>
+        <form onsubmit="updateMovie(event)">
+            <input type="text" id="editId" placeholder="ID del film" required><br>
+            <input type="text" id="editTitle" placeholder="Titolo" required><br>
+            <input type="number" id="editYear" placeholder="Anno" required><br>
+            <input type="number" id="editRuntime" placeholder="Durata (min)" required><br>
+            <input type="text" id="editActors" placeholder="Attori (virgola separati)" required><br>
+            <input type="text" id="editDirector" placeholder="Regista" required><br>
+            <input type="text" id="editPlot" placeholder="Trama" required><br>
+            <input type="text" id="editGenres" placeholder="Generi (virgola separati)" required><br>
+            <button type="submit">Modifica</button>
+        </form>
+        <pre id="editResult"></pre>
+    </section>
+
+    <section>
+        <h2>5. Elimina un film</h2>
+        <input type="text" id="deleteId" placeholder="ID film da eliminare">
+        <button onclick="deleteMovie()">Elimina</button>
+        <pre id="deleteResult"></pre>
+    </section>
+
+    <script>
+        const API_BASE = "http://localhost:3001/movies";
+
+        async function getAllMovies() {
+            const res = await fetch(API_BASE);
+            const data = await res.json();
+            document.getElementById('allMovies').textContent = JSON.stringify(data, null, 2);
+        }
+
+        async function getMovieById() {
+            const id = document.getElementById('movieId').value;
+            const res = await fetch(`${API_BASE}/${id}`);
+            const text = await res.text();
+            document.getElementById('movieById').textContent = text;
+        }
+
+        async function addMovie(event) {
+            event.preventDefault();
+            const data = {
+                title: document.getElementById('title').value,
+                year: parseInt(document.getElementById('year').value),
+                runtime: parseInt(document.getElementById('runtime').value),
+                actors: document.getElementById('actors').value,
+                director: document.getElementById('director').value,
+                plot: document.getElementById('plot').value,
+                genres: document.getElementById('genres').value.split(',').map(g => g.trim())
+            };
+            const res = await fetch(API_BASE, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(data)
+            });
+            const text = await res.text();
+            document.getElementById('addResult').textContent = text;
+        }
+
+        async function updateMovie(event) {
+            event.preventDefault();
+            const id = document.getElementById('editId').value;
+            const data = {
+                title: document.getElementById('editTitle').value,
+                year: parseInt(document.getElementById('editYear').value),
+                runtime: parseInt(document.getElementById('editRuntime').value),
+                actors: document.getElementById('editActors').value,
+                director: document.getElementById('editDirector').value,
+                plot: document.getElementById('editPlot').value,
+                genres: document.getElementById('editGenres').value.split(',').map(g => g.trim())
+            };
+            const res = await fetch(`${API_BASE}/${id}`, {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(data)
+            });
+            const text = await res.text();
+            document.getElementById('editResult').textContent = text;
+        }
+
+        async function deleteMovie() {
+            const id = document.getElementById('deleteId').value;
+            const res = await fetch(`${API_BASE}/${id}`, { method: 'DELETE' });
+            const text = await res.text();
+            document.getElementById('deleteResult').textContent = text;
+        }
+    </script>
+</body>
+</html>
